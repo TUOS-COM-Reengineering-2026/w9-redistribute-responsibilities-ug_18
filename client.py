@@ -14,19 +14,19 @@ def client():
     branch_london = Branch(location="London")
     bank.setup_branch(branch_london)
     assert branch_london in bank.branches
-    assert bank.branch_opening_times[branch_london] == "9:00"
+    assert branch_london.get_opening_time() == "9:00"
 
-    bank.change_opening_time(branch=branch_london, time="8:00")
-    assert bank.branch_opening_times[branch_london] == "8:00"
+    branch_london.set_opening_time("8:00")
+    assert branch_london.get_opening_time() == "8:00"
 
     staff_john = Staff(name="John")
-    bank.add_staff_member(branch=branch_london, staff=staff_john)
+    branch_london.add_staff(staff_john)
     assert staff_john in branch_london.get_staff()
 
     branch_sheffield = Branch(location="Sheffield")
     bank.setup_branch(branch_sheffield)
     assert branch_sheffield in bank.branches
-    assert bank.branch_opening_times[branch_sheffield] == "9:00"
+    assert branch_sheffield.get_opening_time() == "9:00"
 
     bank.close_branch(branch=branch_london, transfer_branch=branch_sheffield)
     assert branch_london not in bank.branches
@@ -49,7 +49,7 @@ def client():
     bank.add_funds(account=account_alice, amount=1000)
     assert account_alice.get_balance() == 1000.0
 
-    bank.add_interest(account=account_alice)
+    account_alice.add_interest()
     assert account_alice.get_balance() == 1000.0 + 0.05 * 1000.0
 
     bank.close_account(account=account_alice)
@@ -58,7 +58,7 @@ def client():
     assert account_alice not in bank.accounts
 
     payroll = Payroll()
-    bank.change_payroll_date(payroll=payroll, date="31", staff_category="Manager")
+    payroll.change_payroll_date(date="31", staff_category="Manager")
     assert payroll.get_staff_category_pay_day("Manager") == "31"
 
     return True
