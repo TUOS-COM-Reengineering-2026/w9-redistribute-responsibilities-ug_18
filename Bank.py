@@ -9,8 +9,6 @@ class Bank:
     def __init__(self):
         self.accounts = []
         self.customers = []
-        self.customer_addresses = {}  # key: customer, value: address
-        self.customer_phone_numbers = {}  # key: customer, value: phone number
         self.branches = []
         self.branch_opening_times = {}  # key: branch, value: opening time
         self.payroll = None
@@ -31,11 +29,10 @@ class Bank:
     def setup_new_account(self, account: Account, customer: Customer):
         account.set_customer(customer)
         self.accounts.append(account)
+        customer.add_account(account)
 
         if customer not in self.customers:
             self.customers.append(customer)
-            self.customer_addresses[customer] = "NO ADDRESS"  # default address
-            self.customer_phone_numbers[customer] = "NO PHONE NUMBER"  # default phone number
 
     def obtain_balance(self, account: Account):
         return account.get_balance()
@@ -51,8 +48,11 @@ class Bank:
         account.set_balance(balance + amount)
 
     def close_account(self, account: Account):
+        customer = account.get_customer()
         account.set_customer(None)
         account.set_balance(0)
+        if customer:
+            customer.remove_account(account)
         self.accounts.remove(account)
 
     def add_staff_member(self, branch: Branch, staff: Staff):
