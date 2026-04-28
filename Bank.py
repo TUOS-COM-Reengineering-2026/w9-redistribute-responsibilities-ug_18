@@ -10,7 +10,6 @@ class Bank:
         self.accounts = []
         self.customers = []
         self.branches = []
-        self.payroll = None
 
     def setup_branch(self, branch: Branch):
         self.branches.append(branch)
