@@ -23,8 +23,8 @@ class Bank:
         self.branches.remove(branch)
 
     def transfer_staff_member(self, from_branch: Branch, to_branch: Branch, staff: Staff):
-        from_branch.get_staff().remove(staff)
-        to_branch.get_staff().append(staff)
+        from_branch.remove_staff(staff)
+        to_branch.add_staff(staff)
 
     def setup_new_account(self, account: Account, customer: Customer):
         account.set_customer(customer)
@@ -56,7 +56,7 @@ class Bank:
         self.accounts.remove(account)
 
     def add_staff_member(self, branch: Branch, staff: Staff):
-        branch.get_staff().append(staff)
+        branch.add_staff(staff)
 
     def change_opening_time(self, branch: Branch, time: str):
         self.branch_opening_times[branch] = time
