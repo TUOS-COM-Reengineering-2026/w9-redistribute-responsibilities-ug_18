@@ -17,6 +17,9 @@ class Branch:
     def get_staff(self):
         return self._staff
     
+    def add_staff_member(self, staff: Staff):
+        self._staff.append(staff)
+    
     def get_opening_time(self):
         return self._opening_time
     

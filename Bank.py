@@ -54,9 +54,6 @@ class Bank:
             customer.remove_account(account)
         self.accounts.remove(account)
 
-    def add_staff_member(self, branch: Branch, staff: Staff):
-        branch.get_staff().append(staff)
-
 
     def change_payroll_date(self, payroll: Payroll, date: str, staff_category: str):
         self.payroll = payroll
