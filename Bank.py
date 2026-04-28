@@ -10,11 +10,11 @@ class Bank:
         self.accounts = []
         self.customers = []
         self.branches = []
-        self.branch_opening_times = {}  # key: branch, value: opening time
+        self.payroll = None
 
     def setup_branch(self, branch: Branch):
         self.branches.append(branch)
-        self.branch_opening_times[branch] = "9:00"  # default opening time
+        branch.set_opening_time("9:00")
 
     def close_branch(self, branch: Branch, transfer_branch: Branch):
         for staff in branch.get_staff():
@@ -57,6 +57,7 @@ class Bank:
     def add_staff_member(self, branch: Branch, staff: Staff):
         branch.get_staff().append(staff)
 
-    def change_opening_time(self, branch: Branch, time: str):
-        self.branch_opening_times[branch] = time
-        
+
+    def change_payroll_date(self, payroll: Payroll, date: str, staff_category: str):
+        self.payroll = payroll
+        self.payroll.get_staff_category_pay_schedule(staff_category).set_pay_date(date)
